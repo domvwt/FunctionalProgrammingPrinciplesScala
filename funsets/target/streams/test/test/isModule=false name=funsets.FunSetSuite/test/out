@@ -1,0 +1,11 @@
+[0m[[0minfo[0m] [0m[32mFunSetSuite:[0m[0m
+[0m[[0minfo[0m] [0m[32m- adding ints[0m[0m
+[0m[[0minfo[0m] [0m[32m- contains is implemented[0m[0m
+[0m[[0minfo[0m] [0m[32m- singletonSet(1) contains 1[0m[0m
+[0m[[0minfo[0m] [0m[32m- union contains all elements of each set[0m[0m
+[0m[[0minfo[0m] [0m[32m- intersect contains common elements of each set[0m[0m
+[0m[[0minfo[0m] [0m[32m- diff contains all elements that are in one set and not the other[0m[0m
+[0m[[0minfo[0m] [0m[32m- filter contains all elements of a set for which p holds[0m[0m
+[0m[[0minfo[0m] [0m[32m- forall returns whether all bounded integers in s satisfy p[0m[0m
+[0m[[0minfo[0m] [0m[32m- exists returns true if there is an integer in the Set that satisfies p[0m[0m
+[0m[[0minfo[0m] [0m[32m- map applies a function f to all elements of set s[0m[0m
