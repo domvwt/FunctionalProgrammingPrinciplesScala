@@ -4,7 +4,7 @@
 		module="objsets-build"
 		revision="0.1-SNAPSHOT"
 		status="integration"
-		publication="20180613224243"
+		publication="20180723204138"
 		e:sbtVersion="0.13" e:scalaVersion="2.10"
 	>
 		<description>
