@@ -2,45 +2,9 @@
 [0m[[0minfo[0m] [0m[32m- filter: on empty set[0m[0m
 [0m[[0minfo[0m] [0m[32m- filter: a on set5[0m[0m
 [0m[[0minfo[0m] [0m[32m- filter: 20 on set5[0m[0m
-[0m[[0minfo[0m] [0m[31m- union: set4c and set4d *** FAILED ***[0m[0m
-[0m[[0minfo[0m] [0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
-[0m[[0minfo[0m] [0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:230)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSet.union(TweetSet.scala:59)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$4$$anon$4.<init>(TweetSetSuite.scala:50)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$4.apply$mcV$sp(TweetSetSuite.scala:49)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$4.apply(TweetSetSuite.scala:49)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$4.apply(TweetSetSuite.scala:49)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.Transformer$$anonfun$apply$1.apply$mcV$sp(Transformer.scala:22)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.OutcomeOf$class.outcomeOf(OutcomeOf.scala:85)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
-[0m[[0minfo[0m] [0m[31m  ...[0m[0m
-[0m[[0minfo[0m] [0m[31m- union: with empty set (1) *** FAILED ***[0m[0m
-[0m[[0minfo[0m] [0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
-[0m[[0minfo[0m] [0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:230)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSet.union(TweetSet.scala:59)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$5$$anon$5.<init>(TweetSetSuite.scala:56)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$5.apply$mcV$sp(TweetSetSuite.scala:55)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$5.apply(TweetSetSuite.scala:55)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$5.apply(TweetSetSuite.scala:55)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.Transformer$$anonfun$apply$1.apply$mcV$sp(Transformer.scala:22)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.OutcomeOf$class.outcomeOf(OutcomeOf.scala:85)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
-[0m[[0minfo[0m] [0m[31m  ...[0m[0m
-[0m[[0minfo[0m] [0m[31m- union: with empty set (2) *** FAILED ***[0m[0m
-[0m[[0minfo[0m] [0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
-[0m[[0minfo[0m] [0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:230)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSet.union(TweetSet.scala:59)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$6$$anon$6.<init>(TweetSetSuite.scala:62)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$6.apply$mcV$sp(TweetSetSuite.scala:61)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$6.apply(TweetSetSuite.scala:61)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at objsets.TweetSetSuite$$anonfun$6.apply(TweetSetSuite.scala:61)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.Transformer$$anonfun$apply$1.apply$mcV$sp(Transformer.scala:22)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.OutcomeOf$class.outcomeOf(OutcomeOf.scala:85)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)[0m[0m
-[0m[[0minfo[0m] [0m[31m  at org.scalatest.Transformer.apply(Transformer.scala:22)[0m[0m
-[0m[[0minfo[0m] [0m[31m  ...[0m[0m
+[0m[[0minfo[0m] [0m[32m- union: set4c and set4d[0m[0m
+[0m[[0minfo[0m] [0m[32m- union: with empty set (1)[0m[0m
+[0m[[0minfo[0m] [0m[32m- union: with empty set (2)[0m[0m
 [0m[[0minfo[0m] [0m[31m- descending: set5 *** FAILED ***[0m[0m
 [0m[[0minfo[0m] [0m[31m  scala.NotImplementedError: an implementation is missing[0m[0m
 [0m[[0minfo[0m] [0m[31m  at scala.Predef$.$qmark$qmark$qmark(Predef.scala:230)[0m[0m
