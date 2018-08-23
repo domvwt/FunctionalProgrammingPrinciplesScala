@@ -148,7 +148,6 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
     def mostRetweetedAcc(ts: TweetSet, rtmax: Tweet): Tweet = {
       if (elem.retweets > rtmax.retweets) mostRetweetedAcc(this.right, mostRetweetedAcc(this.left, elem))
       else mostRetweetedAcc(this.right, mostRetweetedAcc(this.left, rtmax))
-      rtmax
     }
 
   /**
