@@ -67,8 +67,8 @@ abstract class TweetSet {
    * Question: Should we implement this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-    def mostRetweeted: Tweet = ???
-  
+    def mostRetweeted: Tweet
+
   /**
    * Returns a list containing all tweets of this set, sorted by retweet count
    * in descending order. In other words, the head of the resulting list should
@@ -112,7 +112,11 @@ class Empty extends TweetSet {
     def filterAcc(p: Tweet => Boolean, acc: TweetSet): TweetSet = acc
 
     def union(that: TweetSet): TweetSet = that
-  
+
+    def mostRetweeted: Tweet = throw new java.util.NoSuchElementException
+
+    def mostRetweetedAcc(ts: TweetSet, rtmax: Tweet): Tweet = rtmax
+
   /**
    * The following methods are already implemented
    */
@@ -136,7 +140,17 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
     def union(that: TweetSet): TweetSet = {
       ((left union right) union that) incl elem
     }
-    
+
+    def mostRetweeted: Tweet = {
+      mostRetweetedAcc(this, elem)
+    }
+
+    def mostRetweetedAcc(ts: TweetSet, rtmax: Tweet): Tweet = {
+      if (elem.retweets > rtmax.retweets) mostRetweetedAcc(this.right, mostRetweetedAcc(this.left, elem))
+      else mostRetweetedAcc(this.right, mostRetweetedAcc(this.left, rtmax))
+      rtmax
+    }
+
   /**
    * The following methods are already implemented
    */
@@ -190,7 +204,7 @@ object GoogleVsApple {
   val google = List("android", "Android", "galaxy", "Galaxy", "nexus", "Nexus")
   val apple = List("ios", "iOS", "iphone", "iPhone", "ipad", "iPad")
 
-    lazy val googleTweets: TweetSet = ???
+  lazy val googleTweets: TweetSet = ???
   lazy val appleTweets: TweetSet = ???
   
   /**
