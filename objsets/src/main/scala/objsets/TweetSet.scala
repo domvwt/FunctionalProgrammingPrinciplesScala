@@ -69,6 +69,11 @@ abstract class TweetSet {
    */
     def mostRetweeted: Tweet
 
+    def maxRetweeted(tw1: Tweet, tw2: Tweet): Tweet = {
+      if (tw1.retweets > tw2.retweets) tw1
+      else tw2
+    }
+
   /**
    * Returns a list containing all tweets of this set, sorted by retweet count
    * in descending order. In other words, the head of the resulting list should
@@ -79,7 +84,7 @@ abstract class TweetSet {
    * and be implemented in the subclasses?
    */
     def descendingByRetweet: TweetList = ???
-  
+
   /**
    * The following methods are already implemented
    */
@@ -145,9 +150,14 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
       mostRetweetedAcc(this, elem)
     }
 
-    def mostRetweetedAcc(ts: TweetSet, rtmax: Tweet): Tweet = {
-      if (elem.retweets > rtmax.retweets) mostRetweetedAcc(this.right, mostRetweetedAcc(this.left, elem))
-      else mostRetweetedAcc(this.right, mostRetweetedAcc(this.left, rtmax))
+    def mostRetweetedAcc(ts: TweetSet, acc: Tweet): Tweet = {
+      val rtmax = maxRetweeted(elem, acc)
+      maxRetweeted(elem,
+        maxRetweeted(
+          mostRetweetedAcc(left, rtmax),
+          mostRetweetedAcc(right, rtmax)
+        )
+      )
     }
 
   /**
