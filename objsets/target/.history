@@ -25,3 +25,6 @@ sbt clean reload compile
 :exit
 quit
 exit
+submit dominic.thorn@barclayscorp.com KKnAqg17NnVbnL6H
+git status
+exit
