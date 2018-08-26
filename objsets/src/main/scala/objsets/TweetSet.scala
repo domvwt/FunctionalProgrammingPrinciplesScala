@@ -69,10 +69,7 @@ abstract class TweetSet {
    */
     def mostRetweeted: Tweet
 
-    def maxRetweeted(tw1: Tweet, tw2: Tweet): Tweet = {
-      if (tw1.retweets > tw2.retweets) tw1
-      else tw2
-    }
+    def mostRetweetedAcc(max: Tweet): Tweet
 
   /**
    * Returns a list containing all tweets of this set, sorted by retweet count
@@ -120,7 +117,7 @@ class Empty extends TweetSet {
 
     def mostRetweeted: Tweet = throw new java.util.NoSuchElementException
 
-    def mostRetweetedAcc(ts: TweetSet, rtmax: Tweet): Tweet = rtmax
+    def mostRetweetedAcc(max: Tweet): Tweet = max
 
   /**
    * The following methods are already implemented
@@ -147,17 +144,11 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
     }
 
     def mostRetweeted: Tweet = {
-      mostRetweetedAcc(this, elem)
+      mostRetweetedAcc(elem)
     }
 
-    def mostRetweetedAcc(ts: TweetSet, acc: Tweet): Tweet = {
-      val rtmax = maxRetweeted(elem, acc)
-      maxRetweeted(elem,
-        maxRetweeted(
-          mostRetweetedAcc(left, rtmax),
-          mostRetweetedAcc(right, rtmax)
-        )
-      )
+    def mostRetweetedAcc(max: Tweet): Tweet = {
+      left.mostRetweetedAcc(right.mostRetweetedAcc(if (elem.retweets > max.retweets) elem else max))
     }
 
   /**

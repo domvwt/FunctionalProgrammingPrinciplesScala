@@ -9,3 +9,19 @@ clean reload compile
 exit
 test
 exit
+clean
+reload compile
+reload
+compile
+clean reload compile
+clean; reload
+clean
+reload
+compile
+submit dominic.thorn@gmail.com OMH4ghCdi016B8fC
+submit dominic.thorn@barclayscorp.com OMH4ghCdi016B8fC
+sbt clean reload compile
+:quit
+:exit
+quit
+exit
