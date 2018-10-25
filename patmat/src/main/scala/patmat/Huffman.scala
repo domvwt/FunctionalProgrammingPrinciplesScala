@@ -31,15 +31,15 @@ object Huffman {
 
   def weight(tree: CodeTree): Int =
     tree match {
-      case Fork(_, _, _, weight) => weight
-      case Leaf(_, weight) => weight
+      case f: Fork => f.weight
+      case l: Leaf => l.weight
       case _ => throw sys.error("No weight value.")
     }
 
   def chars(tree: CodeTree): List[Char] =
     tree match {
-      case Fork(_, _, chars, _) => chars
-      case Leaf(char, _) => List(char)
+      case f: Fork => f.chars
+      case l: Leaf => List(l.char)
       case _ => throw sys.error("No chars value.")
     }
 
@@ -90,7 +90,7 @@ object Huffman {
     def helper(chars: List[Char], acc: List[(Char, Int)]): List[(Char, Int)] = {
       chars match {
         case Nil => acc
-        case _ :: _ => if (acc.exists(cond(chars.head))) {
+        case _: List[Char] => if (acc.exists(cond(chars.head))) {
           helper(chars.tail, (chars.head, acc.filter(cond(chars.head)).head._2 + 1) :: acc.filterNot(cond(chars.head)))
         } else {
           helper(chars.tail, (chars.head, 1) :: acc)
@@ -229,7 +229,7 @@ object Huffman {
 
   /**
     * What does the secret message say? Can you decode it?
-    * For the decoding use the `frenchCode' Huffman tree defined above.
+    * For the decoding use the `frenchCode` Huffman tree defined above.
     **/
   val secret: List[Bit] = List(0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1)
 
@@ -249,12 +249,9 @@ object Huffman {
     if (text.isEmpty) Nil
     else {
       tree match {
-        case l: Leaf => Nil
-        case f: Fork => if (chars(f.left).contains(text.head)) {
-          0 :: encode(tree)(text.tail)
-        } else {
-          1 :: encode(tree)(text.tail)
-        }
+        case _: Leaf => Nil
+        case f: Fork => if (chars(f.left).contains(text.head)) 0 :: encode(tree)(text.tail)
+        else 1 :: encode(tree)(text.tail)
       }
     }
   }
@@ -268,7 +265,14 @@ object Huffman {
     * This function returns the bit sequence that represents the character `char` in
     * the code table `table`.
     */
-  def codeBits(table: CodeTable)(char: Char): List[Bit] = ???
+  def codeBits(table: CodeTable)(char: Char): List[Bit] = {
+    def cond(letter: Char)(p: (Char, List[Bit])): Boolean = p._1 == letter
+
+    table.filter(cond(char)).head match {
+      case (_, bits) => bits
+      case _ => throw sys.error("Unexpected input.")
+    }
+  }
 
   /**
     * Given a code tree, create a code table which contains, for every character in the
