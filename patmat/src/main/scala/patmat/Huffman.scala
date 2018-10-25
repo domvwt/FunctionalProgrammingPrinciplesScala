@@ -145,7 +145,14 @@ object Huffman {
     * If `trees` is a list of less than two elements, that list should be returned
     * unchanged.
     */
-  def combine(trees: List[CodeTree]): List[CodeTree] = ???
+  def combine(trees: List[CodeTree]): List[CodeTree] = {
+    trees match {
+      case _ :: Nil => trees
+      case first :: second :: tail =>
+        Fork(first, second, chars(first) ::: chars(second), weight(first) + weight(second)) :: tail
+      case _ => throw sys.error("Unexpected input")
+    }
+  }
 
   /**
     * This function will be called in the following way:
