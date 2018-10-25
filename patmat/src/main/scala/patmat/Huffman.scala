@@ -1,5 +1,7 @@
 package patmat
 
+import java.nio.charset.CoderResult
+
 import common._
 
 /**
@@ -26,18 +28,19 @@ object Huffman {
 
 
   // Part 1: Basics
+
   def weight(tree: CodeTree): Int =
     tree match {
       case Fork(_, _, _, weight) => weight
       case Leaf(_, weight) => weight
-      case _ => throw sys.error("No weight value")
+      case _ => throw sys.error("No weight value.")
     }
 
   def chars(tree: CodeTree): List[Char] =
     tree match {
       case Fork(_, _, chars, _) => chars
       case Leaf(char, _) => List(char)
-      case _ => throw sys.error("No chars value")
+      case _ => throw sys.error("No chars value.")
     }
 
   def makeCodeTree(left: CodeTree, right: CodeTree) =
@@ -149,8 +152,8 @@ object Huffman {
     trees match {
       case _ :: Nil => trees
       case first :: second :: tail =>
-        Fork(first, second, chars(first) ::: chars(second), weight(first) + weight(second)) :: tail
-      case _ => throw sys.error("Unexpected input")
+        makeCodeTree(first, second) :: tail
+      case _ => throw sys.error("Unexpected input.")
     }
   }
 
@@ -171,7 +174,13 @@ object Huffman {
     * the example invocation. Also define the return type of the `until` function.
     *  - try to find sensible parameter names for `xxx`, `yyy` and `zzz`.
     */
-  def until(xxx: ???, yyy: ???)(zzz: ???): ??? = ???
+  def until[T](stopCondition: List[T] => Boolean, applyFunction: List[T] => List[T])
+              (listOfThings: List[T]): List[T] = {
+    if (stopCondition(listOfThings)) listOfThings
+    else {
+      until(stopCondition, applyFunction)(listOfThings.tail)
+    }
+  }
 
   /**
     * This function creates a code tree which is optimal to encode the text `chars`.
@@ -179,7 +188,12 @@ object Huffman {
     * The parameter `chars` is an arbitrary text. This function extracts the character
     * frequencies from that text and creates a code tree based on them.
     */
-  def createCodeTree(chars: List[Char]): CodeTree = ???
+  def createCodeTree(chars: List[Char]): CodeTree = {
+    val freqs = times(chars)
+    val orderedLeaves = makeOrderedLeafList(freqs)
+
+    until[CodeTree](singleton, combine)(orderedLeaves).head
+  }
 
 
   // Part 3: Decoding
