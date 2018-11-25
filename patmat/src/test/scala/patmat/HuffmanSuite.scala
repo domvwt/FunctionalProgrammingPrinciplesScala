@@ -65,4 +65,17 @@ class HuffmanSuite extends FunSuite {
     assert(decoded === testText)
   }
 
+  test("converted french code tree should match expected output") {
+    new TestTrees {
+      val converted: CodeTable = convert(t2)
+      val t2Table: CodeTable =
+        List(
+          ('a', List(0, 0)),
+          ('b', List(1, 0)),
+          ('d', List(1))
+        )
+      assert(converted == t2Table)
+    }
+  }
+
 }
