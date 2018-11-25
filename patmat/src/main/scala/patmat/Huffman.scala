@@ -33,14 +33,12 @@ object Huffman {
     tree match {
       case f: Fork => f.weight
       case l: Leaf => l.weight
-      case _ => throw sys.error("No weight value.")
     }
 
   def chars(tree: CodeTree): List[Char] =
     tree match {
       case f: Fork => f.chars
       case l: Leaf => List(l.char)
-      case _ => throw sys.error("No chars value.")
     }
 
   def makeCodeTree(left: CodeTree, right: CodeTree) =
@@ -123,7 +121,7 @@ object Huffman {
       }
     }
 
-    helper(freqs.tail, List(), List(Leaf(freqs.head._1, freqs.head._2)))
+    if (freqs.isEmpty) Nil else helper(freqs.tail, List(), List(Leaf(freqs.head._1, freqs.head._2)))
   }
 
   /**
@@ -150,10 +148,9 @@ object Huffman {
     */
   def combine(trees: List[CodeTree]): List[CodeTree] = {
     trees match {
-      case _ :: Nil => trees
       case first :: second :: tail =>
         makeCodeTree(first, second) :: tail
-      case _ => throw sys.error("Unexpected input.")
+      case other => other
     }
   }
 
@@ -213,7 +210,6 @@ object Huffman {
         } else {
           helper(f.right, bits.tail)
         }
-        case _ => throw sys.error("Unexpected input.")
       }
     }
 
@@ -246,14 +242,18 @@ object Huffman {
     * into a sequence of bits.
     */
   def encode(tree: CodeTree)(text: List[Char]): List[Bit] = {
-    if (text.isEmpty) Nil
-    else {
-      tree match {
-        case _: Leaf => Nil
-        case f: Fork => if (chars(f.left).contains(text.head)) 0 :: encode(tree)(text.tail)
-        else 1 :: encode(tree)(text.tail)
+    def helper(treeNew: CodeTree, text: List[Char]): List[Bit] = {
+      treeNew match {
+        case _: Leaf => encode(tree)(text.tail)
+        case f: Fork => if (chars(f.left).contains(text.head)) {
+          List(0) ::: helper(f.left, text)
+        } else {
+          List(1) ::: helper(f.right, text)
+        }
       }
     }
+
+    if (text.isEmpty) Nil else helper(tree, text)
   }
 
 
@@ -270,7 +270,6 @@ object Huffman {
 
     table.filter(cond(char)).head match {
       case (_, bits) => bits
-      case _ => throw sys.error("Unexpected input.")
     }
   }
 
@@ -282,7 +281,9 @@ object Huffman {
     * a valid code tree that can be represented as a code table. Using the code tables of the
     * sub-trees, think of how to build the code table for the entire tree.
     */
-  def convert(tree: CodeTree): CodeTable = ???
+  def convert(tree: CodeTree): CodeTable = {
+
+  }
 
   /**
     * This function takes two code tables and merges them into one. Depending on how you
