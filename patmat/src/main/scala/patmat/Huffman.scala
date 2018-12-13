@@ -185,13 +185,6 @@ object Huffman {
     * The parameter `chars` is an arbitrary text. This function extracts the character
     * frequencies from that text and creates a code tree based on them.
     */
-  //    [Test Description] 'createCodeTree(someText)' gives an optimal encoding, the number of bits when encoding 'someText' is minimal
-  //    [Observed Error] 0 did not equal 1919
-  //    [Lost Points] 15
-  //
-  //    [Test Description] createCodeTree should be implemented in terms of times, makeOrderedLeafList, singleton, combine and until
-  //    [Observed Error] InstrumentedSuite.this.wasCalled(call) was false expected combine to be called
-  //    [Lost Points] 10
   def createCodeTree(chars: List[Char]): CodeTree = {
     until[CodeTree](singleton, combine)(makeOrderedLeafList(times(chars))).head
   }
@@ -284,14 +277,11 @@ object Huffman {
     * a valid code tree that can be represented as a code table. Using the code tables of the
     * sub-trees, think of how to build the code table for the entire tree.
     */
-  //    [Test Description] convert: code table is created correctly
-  //    [Observed Error] List((a,List(0, 0)), (b,List(1, 0)), (d,List(1))) did not equal List((a,List(0, 0)), (b,List(0, 1)), (d,List(1)))
-  //    [Lost Points] 20
   def convert(tree: CodeTree): CodeTable = {
     def helper(tree: CodeTree, bitList: List[Bit]): CodeTable = {
       tree match {
         case l: Leaf => List((l.char, bitList))
-        case f: Fork => helper(f.left, 0 :: bitList) ::: helper(f.right, 1 :: bitList)
+        case f: Fork => mergeCodeTables(helper(f.left, bitList ::: List(0)), helper(f.right, bitList ::: List(1)))
       }
     }
 
@@ -313,24 +303,18 @@ object Huffman {
     * To speed up the encoding process, it first converts the code tree to a code table
     * and then uses it to perform the actual encoding.
     */
-  //    [Test Description] quick encode gives the correct byte sequence
-  //    [Observed Error] head of empty list
-  //    [exception was thrown] detailed error message in debug output section below
-  //    [Lost Points] 20
-  //    [Test Description] decode and quick encode is identity
-  //    [Observed Error] head of empty list
-  //    [exception was thrown] detailed error message in debug output section below
-  //    [Lost Points] 10
   def quickEncode(tree: CodeTree)(text: List[Char]): List[Bit] = {
     def helper(codeTableNew: CodeTable, text: List[Char], bitList: List[Bit]): List[Bit] = {
-      codeTableNew.head match {
-        case (a, b) => if (a == text.head) helper(convert(tree), text.tail, b ::: bitList)
-        else helper(codeTableNew.tail, text, bitList)
+      if (text.isEmpty) bitList
+      else {
+        codeTableNew.head match {
+          case (a, b) =>
+            if (a == text.head) helper(convert(tree), text.tail, bitList ::: b)
+            else helper(codeTableNew.tail, text, bitList)
+        }
       }
     }
 
-    val convertedTree = convert(tree)
-
-    if (text.isEmpty) Nil else helper(convertedTree, text, List())
+    helper(convert(tree), text, List())
   }
 }
