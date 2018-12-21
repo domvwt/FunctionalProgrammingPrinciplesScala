@@ -69,21 +69,27 @@ object Anagrams {
     * Example: the subsets of the occurrence list `List(('a', 2), ('b', 2))` are:
     *
     * List(
-    *   List(),
-    *   List(('a', 1)),
-    *   List(('a', 2)),
-    *   List(('b', 1)),
-    *   List(('a', 1), ('b', 1)),
-    *   List(('a', 2), ('b', 1)),
-    *   List(('b', 2)),
-    *   List(('a', 1), ('b', 2)),
-    *   List(('a', 2), ('b', 2))
+    * List(),
+    * List(('a', 1)),
+    * List(('a', 2)),
+    * List(('b', 1)),
+    * List(('a', 1), ('b', 1)),
+    * List(('a', 2), ('b', 1)),
+    * List(('b', 2)),
+    * List(('a', 1), ('b', 2)),
+    * List(('a', 2), ('b', 2))
     * )
     *
     * Note that the order of the occurrence list subsets does not matter -- the subsets
     * in the example above could have been displayed in some other order.
     */
-  def combinations(occurrences: Occurrences): List[Occurrences] = ???
+  //  def combinations(occurrences: Occurrences): List[Occurrences] = ???
+
+  def combinations(occurrences: Occurrences): List[Occurrences] = {
+    occurrences.foldRight(List[Occurrences](Nil))(
+      { case (a: (Char, Int), b: List[Occurrences]) => List(a) :: b }
+    )
+  }
 
   /** Subtracts occurrence list `y` from occurrence list `x`.
     *
@@ -113,20 +119,20 @@ object Anagrams {
     * Here is a full example of a sentence `List("Yes", "man")` and its anagrams for our dictionary:
     *
     * List(
-    *   List(en, as, my),
-    *   List(en, my, as),
-    *   List(man, yes),
-    *   List(men, say),
-    *   List(as, en, my),
-    *   List(as, my, en),
-    *   List(sane, my),
-    *   List(Sean, my),
-    *   List(my, en, as),
-    *   List(my, as, en),
-    *   List(my, sane),
-    *   List(my, Sean),
-    *   List(say, men),
-    *   List(yes, man)
+    * List(en, as, my),
+    * List(en, my, as),
+    * List(man, yes),
+    * List(men, say),
+    * List(as, en, my),
+    * List(as, my, en),
+    * List(sane, my),
+    * List(Sean, my),
+    * List(my, en, as),
+    * List(my, as, en),
+    * List(my, sane),
+    * List(my, Sean),
+    * List(say, men),
+    * List(yes, man)
     * )
     *
     * The different sentences do not have to be output in the order shown above - any order is fine as long as
