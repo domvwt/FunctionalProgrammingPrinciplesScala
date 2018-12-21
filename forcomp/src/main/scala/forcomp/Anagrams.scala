@@ -34,7 +34,9 @@ object Anagrams {
    *
    *  Note: you must use `groupBy` to implement this method!
    */
-  def wordOccurrences(w: Word): Occurrences = ???
+  def wordOccurrences(w: Word): List[(Char, Int)] = {
+    w.groupBy((e: Char) => e.toLower).toList.map({ case (c: Char, s: String) => (c, s.length) }).sorted
+  }
 
   /** Converts a sentence into its character occurrence list. */
   def sentenceOccurrences(s: Sentence): Occurrences = ???
