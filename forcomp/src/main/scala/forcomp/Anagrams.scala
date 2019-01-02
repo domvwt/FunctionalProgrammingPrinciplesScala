@@ -1,6 +1,5 @@
 package forcomp
 
-
 object Anagrams {
 
   /** A word is simply a `String`. */
@@ -39,7 +38,9 @@ object Anagrams {
   }
 
   /** Converts a sentence into its character occurrence list. */
-  def sentenceOccurrences(s: Sentence): Occurrences = s.flatMap(wordOccurrences)
+  def sentenceOccurrences(s: Sentence): Occurrences = {
+    wordOccurrences(s.reduce(_ + _))
+  }
 
   /** The `dictionaryByOccurrences` is a `Map` from different occurrences to a sequence of all
     * the words that have that occurrence count.
@@ -151,16 +152,18 @@ object Anagrams {
     *
     * Note: There is only one anagram of an empty sentence.
     */
-  def sentenceAnagrams(sentence: Sentence): List[Sentence] = ???
+  def sentenceAnagrams(sentence: Sentence): List[Sentence] = {
+    def helper(sentenceOccurrences: Occurrences): List[Sentence] = {
+      if (sentenceOccurrences.isEmpty) List(Nil)
+      else for {
+        combo <- combinations(sentenceOccurrences)
+        word <- dictionaryByOccurrences.getOrElse(combo, Nil)
+        rest <- helper(subtract(sentenceOccurrences, combo))
+        if combo.nonEmpty
+      }
+        yield word :: rest
+    }
 
-  // Need to map sentence combinations to dictionaryByOccurences, remove the matched occurences and recursively search
-  // the remaining occurences from the sentence
-
-  /*
-  1. Get sentenceOccurrences
-  2. Find all combinations
-  3. Get wordAnagrams
-  4. Subtract the word anagram occurrences from the original sentence occurrences
-  5. Repeat steps 3 and 4 until exhausted
-  */
+    helper(sentenceOccurrences(sentence))
+  }
 }

@@ -43,6 +43,19 @@ class AnagramsSuite extends FunSuite {
     assert(subtract(lard, r) === lad)
   }
 
+  test("subtract: arron - r") {
+    val arron = List(('a', 1), ('r', 2), ('o', 1), ('n', 1))
+    val r = List(('r', 1))
+    val aron = List(('a', 1), ('r', 1), ('o', 1), ('n', 1))
+    assert(subtract(arron, r).sorted == aron.sorted)
+  }
+
+  test("subtract: aron - r") {
+    val arron = List(('a', 1), ('r', 1), ('o', 1), ('n', 1))
+    val r = List(('r', 1))
+    val aron = List(('a', 1), ('o', 1), ('n', 1))
+    assert(subtract(arron, r).sorted == aron.sorted)
+  }
 
   test("combinations: []") {
     assert(combinations(Nil) === List(Nil))
@@ -65,7 +78,6 @@ class AnagramsSuite extends FunSuite {
       combinations(abba)
         .toSet === abbacomb.toSet)
   }
-
 
   test("sentence anagrams: []") {
     val sentence = List()
