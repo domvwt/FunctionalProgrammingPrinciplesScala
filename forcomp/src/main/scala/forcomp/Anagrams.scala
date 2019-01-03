@@ -157,7 +157,7 @@ object Anagrams {
       if (sentenceOccurrences.isEmpty) List(Nil)
       else for {
         combo <- combinations(sentenceOccurrences)
-        word <- dictionaryByOccurrences.getOrElse(combo, Nil)
+        word <- lookup(combo)
         rest <- helper(subtract(sentenceOccurrences, combo))
         if combo.nonEmpty
       }
@@ -166,4 +166,6 @@ object Anagrams {
 
     helper(sentenceOccurrences(sentence))
   }
+
+  val lookup: Map[Occurrences, List[Word]] = dictionaryByOccurrences.withDefaultValue(Nil)
 }
